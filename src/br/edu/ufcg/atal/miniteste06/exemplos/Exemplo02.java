@@ -1,5 +1,5 @@
 /*
- *   Exemplo01.java
+ *   Exemplo02.java
  *
  *   Copyright 2012 Vitor Morato Almeida.
  *
@@ -29,87 +29,78 @@ import br.edu.ufcg.atal.miniteste06.Exemplo;
 import br.edu.ufcg.atal.miniteste06.Grafo;
 import br.edu.ufcg.atal.miniteste06.No;
 
-public class Exemplo01 implements Exemplo {
+public class Exemplo02 implements Exemplo {
     private Grafo grafo;
     private No origem;
     private No destino;
     
-    public Exemplo01() {
+    public Exemplo02() {
         No a = new No("A");
         No b = new No("B");
         No c = new No("C");
         No d = new No("D");
-        No e = new No("E");
 
         List<No> vertices = new LinkedList<No>();
         vertices.add(a);
         vertices.add(b);
         vertices.add(c);
         vertices.add(d);
-        vertices.add(e);
 
         Aresta ab = new Aresta();
         ab.setOrigem(a);
         ab.setDestino(b);
-        ab.setDelay(-1);
+        ab.setDelay(-7);
         ab.setBandwidth(1);
 
         Aresta ac = new Aresta();
         ac.setOrigem(a);
         ac.setDestino(c);
-        ac.setDelay(8);
+        ac.setDelay(6);
         ac.setBandwidth(2);
+
+        Aresta ad = new Aresta();
+        ad.setOrigem(a);
+        ad.setDestino(d);
+        ad.setDelay(9);
+        ad.setBandwidth(1);
 
         Aresta bc = new Aresta();
         bc.setOrigem(b);
         bc.setDestino(c);
-        bc.setDelay(6);
+        bc.setDelay(-6);
         bc.setBandwidth(2);
 
-        Aresta bd = new Aresta();
-        bd.setOrigem(b);
-        bd.setDestino(d);
-        bd.setDelay(4);
-        bd.setBandwidth(2);
-
-        Aresta be = new Aresta();
-        be.setOrigem(b);
-        be.setDestino(e);
-        be.setDelay(2);
-        be.setBandwidth(1);
+        Aresta cd = new Aresta();
+        cd.setOrigem(c);
+        cd.setDestino(d);
+        cd.setDelay(4);
+        cd.setBandwidth(2);
 
         Aresta db = new Aresta();
         db.setOrigem(d);
         db.setDestino(b);
-        db.setDelay(1);
+        db.setDelay(5);
         db.setBandwidth(1);
 
         Aresta dc = new Aresta();
         dc.setOrigem(d);
         dc.setDestino(c);
-        dc.setDelay(10);
+        dc.setDelay(-10);
         dc.setBandwidth(2);
-
-        Aresta ed = new Aresta();
-        ed.setOrigem(e);
-        ed.setDestino(d);
-        ed.setDelay(-3);
-        ed.setBandwidth(1);
 
         List<Aresta> arestas = new LinkedList<Aresta>();
         arestas.add(ab);
         arestas.add(ac);
+        arestas.add(ad);
         arestas.add(bc);
-        arestas.add(bd);
-        arestas.add(be);
+        arestas.add(cd);
         arestas.add(db);
         arestas.add(dc);
-        arestas.add(ed);
 
         Grafo g = new Grafo();
         g.V = vertices;
         g.E = arestas;
-        
+
         this.grafo = g;
         this.origem = a;
         this.destino = d;

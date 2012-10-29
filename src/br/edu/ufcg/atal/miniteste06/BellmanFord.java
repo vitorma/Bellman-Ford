@@ -21,31 +21,40 @@
 
 package br.edu.ufcg.atal.miniteste06;
 
+import java.util.List;
+import java.util.LinkedList;
+
+import br.edu.ufcg.atal.miniteste06.exemplos.Exemplo01;
+import br.edu.ufcg.atal.miniteste06.exemplos.Exemplo02;
+
 public class BellmanFord {
     
-    private Grafo grafo;
-    private No origem;
-    private No destino;
-
-    public BellmanFord(Grafo grafo, No origem, No destino) {
-        this.grafo = grafo;
-        this.origem = origem;
-        this.destino = destino;
+    public static void main(String[] args) {
+        List<Exemplo> exemplos = new LinkedList<Exemplo>();
+        exemplos.add(new Exemplo01());
+        exemplos.add(new Exemplo02());
+        for (Exemplo exemplo : exemplos) {
+            System.out.println(BellmanFord(exemplo.grafo(), exemplo.origem(), exemplo.destino()));
+        }
     }
-    public void executar(){
-        inicializarGrafo();
-        for(Aresta a : this.grafo.E){
+
+    public static String BellmanFord(Grafo grafo, No origem, No destino) {
+        inicializarGrafo(grafo, origem);
+
+        for(Aresta a : grafo.E){
             relaxar(a);
         }
-        if(!temCicloNegativo()){
-            imprimeResultado();
+
+        if(!temCicloNegativo(grafo)){
+            return caminho(origem, destino);
         } else {
-            System.out.println("Erro grafo tem ciclo negativo");
+            return "O grafo contém ciclo negativo!";
         }
     }
-    private void inicializarGrafo(){
-        for(No vertice : this.grafo.V){
-            if(vertice.equals(this.origem)){
+
+    private static void inicializarGrafo(Grafo grafo, No origem){
+        for(No vertice : grafo.V){
+            if(vertice.equals(origem)){
                 vertice.setDistancia(0);
             } else {
                 vertice.setDistancia(Double.POSITIVE_INFINITY);
@@ -53,7 +62,8 @@ public class BellmanFord {
             vertice.setPredecessor(null);
         }
     }
-    private void relaxar(Aresta aresta){
+
+    private static void relaxar(Aresta aresta){
         No origem = aresta.getOrigem();
         No destino = aresta.getDestino();
         double custoAresta = getCusto(aresta);
@@ -63,12 +73,12 @@ public class BellmanFord {
         }
     }
 
-    private double getCusto(Aresta aresta) {
+    private static double getCusto(Aresta aresta) {
         double custoAresta = (aresta.getDelay()/aresta.getBandwidth());
         return custoAresta;
     }
-    private boolean temCicloNegativo() {
-        for(Aresta a : this.grafo.E){
+    private static boolean temCicloNegativo(Grafo grafo) {
+        for(Aresta a : grafo.E){
             No origem = a.getOrigem();
             No destino = a.getDestino();
             if(origem.getDistancia() + getCusto(a) < destino.getDistancia()){
@@ -77,8 +87,8 @@ public class BellmanFord {
         }
         return false;
     }
-    
-    private void imprimeResultado() {
+
+    private static String caminho(No origem, No destino) {
         String caminho = "";
         String separador =  "->";
         No atual = destino;
@@ -86,12 +96,8 @@ public class BellmanFord {
             caminho = atual.getNome() + separador + caminho;
             atual = atual.getPredecessor();
         }
-        if(caminho.isEmpty()){
-            System.out.println("Nós não conectados");
-            return;
-    }
         caminho = origem.getNome() + separador + caminho.substring(0, caminho.length() - separador.length());
-        System.out.println("Caminho: " + caminho +";" + " Custo: " + destino.getDistancia());
+        return "Caminho: " + caminho +";" + " Custo: " + destino.getDistancia();
     }
 
 }
