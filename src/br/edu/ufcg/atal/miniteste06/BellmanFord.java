@@ -41,8 +41,10 @@ public class BellmanFord {
     public static String BellmanFord(Grafo grafo, No origem, No destino) {
         inicializarGrafo(grafo, origem);
 
-        for(Aresta a : grafo.E){
-            relaxar(a);
+        for (int i = 0; i < grafo.V.size(); i++) {
+            for(Aresta a : grafo.E){
+                relaxar(a);
+            }
         }
 
         if(!temCicloNegativo(grafo)){
